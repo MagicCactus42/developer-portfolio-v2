@@ -9,7 +9,7 @@
 		
 			<div class="head">
 				<span>
-					Hi all, I am
+					Hello, I am
 				</span>
 				<h1>{{ config.name }}</h1>
         <span class="diple flex">
@@ -20,10 +20,10 @@
 
 			<div id="info">
 				<span class="action">
-					// complete the game to continue
+					
 				</span>
 				<span :class="{hide: isMobile}">
-					// you can also see it on my Github page
+					// my Github page
 				</span>
 				<span :class="{hide: !isMobile}">
 					// find my profile on Github:

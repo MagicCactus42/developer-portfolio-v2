@@ -21,24 +21,22 @@
 
       <!-- filter menu -->
       <nav id="filters" class="w-full flex-col">
-
         <div v-for="tech in techs" :key="tech" class="flex items-center py-2">
           <input type="checkbox" :id="tech" @click="filterProjects(tech)">
-          <img :id="'icon-tech-' + tech" :src="'/icons/techs/' + tech + '.svg'" alt="" class="tech-icon w-5 h-5 mx-4">
+          <!-- 🧩 poprawione źródło ikon -->
+          <img :id="'icon-tech-' + tech" :src="getTechIcon(tech)" alt="" class="tech-icon w-5 h-5 mx-4">
           <label :for="tech" :id="'title-tech-' + tech">{{ tech }}</label>
         </div>
       </nav>
     </div>
 
     <!-- content -->
-
     <div class="flex flex-col w-full overflow-hidden">
 
       <!-- windows tab -->
       <div class="tab-height w-full hidden lg:flex border-bot items-center">
         <div class="flex items-center border-right h-full">
-          <p v-for="filter in filters" :key="filter" class="font-fira_regular text-menu-text text-sm px-3">{{ filter }};
-          </p>
+          <p v-for="filter in filters" :key="filter" class="font-fira_regular text-menu-text text-sm px-3">{{ filter }};</p>
           <img src="/icons/close.svg" alt="" class="m-3">
         </div>
       </div>
@@ -48,8 +46,7 @@
         <span class="text-white"> // </span>
         <p class="font-fira_regular text-white text-sm px-3">projects</p>
         <span class="text-menu-text"> / </span>
-        <p v-for="filter in filters" :key="filter" class="font-fira_regular text-menu-text text-sm px-3">{{ filter }};
-        </p>
+        <p v-for="filter in filters" :key="filter" class="font-fira_regular text-menu-text text-sm px-3">{{ filter }};</p>
       </div>
 
       <!-- projects -->
@@ -68,7 +65,6 @@
         </div>
 
         <project-card v-for="(project, index) in projects" :index="index" :project="project" />
-
       </div>
     </div>
   </main>
@@ -76,14 +72,24 @@
 
 <script setup>
 import { ref } from 'vue'
-import DevConfig from '~/developer.json';
+import DevConfig from '~/developer.json'
 
 const config = ref(DevConfig)
 
-const techs = ['React', 'HTML', 'CSS', 'Vue', 'Angular', 'Gatsby', 'Flutter']
+const techs = ['C#']
 const filters = ref(['all'])
 const showFilters = ref(true)
-const projects = ref(config.value.projects)
+const projects = ref(Object.values(config.value.projects))
+
+
+function getTechIcon(tech) {
+  switch (tech) {
+    case 'C#':
+      return '/icons/techs/csharp.svg'
+    default:
+      return `/icons/techs/${tech.toLowerCase()}.svg`
+  }
+}
 
 function filterProjects(tech) {
   document.getElementById('icon-tech-' + tech).classList.toggle('active')
@@ -95,9 +101,14 @@ function filterProjects(tech) {
     filters.value.push(tech)
   } else {
     filters.value = filters.value.filter((item) => item !== tech)
-    filters.value.length === 0 ? filters.value.push('all') : null
+    if (filters.value.length === 0) filters.value.push('all')
   }
-  filters.value[0] == 'all' ? projects.value = config.value.projects : projects.value = filterProjectsBy(filters.value)
+
+  if (filters.value[0] === 'all') {
+  projects.value = Object.values(config.value.projects) 
+} else {
+  projects.value = filterProjectsBy(filters.value)
+}
 
   if (projects.value.length === 0) {
     document.getElementById('projects-case').classList.remove('grid')
@@ -109,10 +120,10 @@ function filterProjects(tech) {
 }
 
 function filterProjectsBy(filters) {
-  const projectArray = Object.values(config.value.projects)
-  return projectArray.filter(project => {
-    return filters.some(filter => project.tech.includes(filter))
-  })
+  const projectArray = Object.values(config.value.projects) 
+  return projectArray.filter(project =>
+    filters.some(filter => project.tech.includes(filter))
+  )
 }
 </script>
 
@@ -195,7 +206,6 @@ input[type="checkbox"]:focus {
   #projects-case {
     padding: 0px 25px 40px;
   }
-
 }
 
 @media (min-width: 768px) {
@@ -209,7 +219,6 @@ input[type="checkbox"]:focus {
   #projects-case {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     padding: 50px 80px 40px;
-    /* padding: 100px 100px 40px; */
   }
 }
 

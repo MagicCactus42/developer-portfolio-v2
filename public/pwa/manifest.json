@@ -1,13 +1,13 @@
 {
-    "name": "Portfolio for Developers Concept v2",
-    "short_name": "Developer Portfolio",
-    "description": "A awesome portfolio template for developers",
-    "start_url": "https://developer-portfolio-v1.netlify.app/",
+    "name": "Michal Pawlukewicz - Portfolio",
+    "short_name": "Portfolio",
+    "description": "Developer portfolio",
+    "start_url": "https://michalpawlukiewi.cz/",
     "display": "standalone",
     "orientation": "portrait",
     "background_color": "#010C15",
     "theme_color": "#010C15",
-    "scope": "https://developer-portfolio-v1.netlify.app/",
+    "scope": "https://michalpawlukiewi.cz/",
     "icons": [{
         "src": "icons/icon48.png",
         "sizes": "48x48",
