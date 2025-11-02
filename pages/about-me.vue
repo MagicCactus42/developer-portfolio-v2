@@ -9,9 +9,19 @@
 
       <!-- DESKTOP section icons -->
       <div id="sections">
-        <div id="section-icon" v-for="section in config.about.sections" :key="section.title" :class="{ active: isSectionActive(section.title)}">
-          <img :id="'section-icon-' + section.title" :src="section.icon" :alt="section.title + '-section'" @click="focusCurrentSection(section)">
-        </div>
+        <div id="section-icon" 
+     v-for="section in config.about.sections" 
+     :key="section.title" 
+     :class="{ active: isSectionActive(section.title)}">
+  <img 
+    :id="'section-icon-' + section.title" 
+    :src="section.icon" 
+    :alt="section.title + '-section'" 
+    @click="focusCurrentSection(section)"
+    :class="{ glow: isSectionActive(section.title) }"
+  >
+</div>
+
       </div>
 
       <!-- focused section content -->
@@ -159,7 +169,7 @@
         
           <div id="gists" class="flex flex-col lg:px-6 lg:py-4 w-full overflow-hidden">
             <!-- title -->
-            <h3 class="text-white lg:text-menu-text mb-4 text-sm">// Code snippet showcase:</h3>
+            <h3 class="text-white lg:text-menu-text mb-4 text-sm">// Code snippets - comming soon:</h3>
 
             <div class="flex flex-col overflow-scroll">
               <!-- snippets -->
@@ -266,6 +276,21 @@
 
 #section-content #contacts {
   padding: 0px 25px;
+}
+
+@keyframes glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px #fff);
+    opacity: 0.8;
+  }
+  50% {
+    filter: drop-shadow(0 0 8px #00ffff);
+    opacity: 1;
+  }
+}
+
+.glow {
+  animation: glow 1.5s infinite;
 }
 
 </style>
